@@ -2,8 +2,11 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 
 	"golang.org/x/net/websocket"
 )
@@ -33,7 +36,27 @@ func connection(ws *websocket.Conn) {
 	}
 }
 
+type config struct {
+	Port string `json:"port"`
+}
+
 func main() {
+
+	// Reading configs from file
+	var cfg config
+	file, err := ioutil.ReadFile("config.cfg")
+
+	if err != nil {
+		fmt.Println("Error Reading the config file\n" + err.Error())
+		os.Exit(1)
+	}
+
+	err = json.Unmarshal(file, &cfg)
+
+	if err != nil {
+		fmt.Println("Error decoding the config file\n" + err.Error())
+		os.Exit(1)
+	}
 
 	// Redirecting requests to resources' folder
 	http.Handle("/", http.FileServer(http.Dir("../client")))
@@ -45,5 +68,6 @@ func main() {
 	http.Handle("/socket", websocket.Handler(connection))
 
 	// Let's get this party started
-	http.ListenAndServe(":9393", nil)
+	fmt.Println("Server Started on port " + cfg.Port)
+	http.ListenAndServe(":"+cfg.Port, nil)
 }
