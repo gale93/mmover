@@ -22,7 +22,9 @@ func main() {
 
 	// Let's get this party started
 	cfg := config.ReadConfigs()
-	fmt.Println("Server Started [" + cfg.IP + "] on port " + cfg.Port)
+	fmt.Println("mmover [" + cfg.IP + "] on port [" + cfg.Port + "]")
+	fmt.Println("You can start using it under one of these links:")
+	fmt.Println("=>\thttp://localhost:" + cfg.Port + "\n=>\thttp://" + cfg.IP + ":" + cfg.Port)
 
 	http.ListenAndServe(":"+cfg.Port, nil)
 }

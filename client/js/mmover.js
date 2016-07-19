@@ -8,7 +8,7 @@ var map, marker;
 
 $(document).ready(function()
 {
-	connection = new Connection("127.0.0.1", "9393");
+	connection = new Connection("127.0.0.1", location.port);
 
 	map = new GMaps(
 		{
