@@ -7,6 +7,9 @@ Made thinking about Pokèmon Go, but can be used for everything.
 ![How it looks](/media/animation.gif)
 
 
+### How it works ..
+![How it works](/media/howitworks.jpg)
+
 ### Todo ..
-I'll finish the readme soon..
+I'll finish the readme soon :D
 
