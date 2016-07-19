@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
 	"os"
 
@@ -40,6 +41,18 @@ type config struct {
 	Port string `json:"port"`
 }
 
+func getIP() string {
+	host, _ := os.Hostname()
+	addrs, _ := net.LookupIP(host)
+	for _, addr := range addrs {
+		if ipv4 := addr.To4(); ipv4 != nil {
+			return ipv4.String()
+		}
+	}
+
+	return "NO_IP"
+}
+
 func main() {
 
 	// Reading configs from file
@@ -68,6 +81,6 @@ func main() {
 	http.Handle("/socket", websocket.Handler(connection))
 
 	// Let's get this party started
-	fmt.Println("Server Started on port " + cfg.Port)
+	fmt.Println("Server Started " + getIP() + " on port " + cfg.Port)
 	http.ListenAndServe(":"+cfg.Port, nil)
 }
