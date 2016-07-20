@@ -13,6 +13,7 @@ function Connection(address, port)
     {
 		owner.connected = true;
         console.log('Connected!');
+		createMap();
     }
 
     this.connection.onclose = function()
@@ -27,9 +28,10 @@ function Connection(address, port)
     {
         console.log('[Connection Error]');
     }
-    this.connection.onmessage = function(data)
+    this.connection.onmessage = function(msg)
     {
-		console.log(data);
+		console.log(msg.data);
+		readMessage(JSON.parse(msg.data));
     }
 
     var conn_ptr = this.connection;
@@ -37,4 +39,20 @@ function Connection(address, port)
 		if (conn_ptr != null && owner.connected)
         	conn_ptr.send(JSON.stringify(obj));
     }
+}
+
+
+function readMessage(data)
+{
+	switch (data.header)
+	{
+		case "starting_pos":
+		{
+			$("#inlat").val(data.body["lat"]);
+			$("#inlng").val(data.body["lng"]);
+			applyCoordinates();
+		}
+
+		break;
+	}
 }

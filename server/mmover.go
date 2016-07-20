@@ -21,10 +21,10 @@ func main() {
 	http.Handle("/socket", websocket.Handler(connection.WebSocketConnection))
 
 	// Let's get this party started
-	cfg := config.ReadConfigs()
-	fmt.Println("mmover [" + cfg.IP + "] on port [" + cfg.Port + "]")
+	config.ReadConfigs()
+	fmt.Println("mmover [" + config.Cfg.IP + "] on port [" + config.Cfg.Port + "]")
 	fmt.Println("You can start using it under one of these links:")
-	fmt.Println("=>\thttp://localhost:" + cfg.Port + "\n=>\thttp://" + cfg.IP + ":" + cfg.Port)
+	fmt.Println("=>\thttp://localhost:" + config.Cfg.Port + "\n=>\thttp://" + config.Cfg.IP + ":" + config.Cfg.Port)
 
-	http.ListenAndServe(":"+cfg.Port, nil)
+	http.ListenAndServe(":"+config.Cfg.Port, nil)
 }

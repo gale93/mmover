@@ -12,6 +12,7 @@
 <script src="external/jquery-3.1.0.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="external/gmaps.min.js"></script>
+
 <script src="js/mmover.js"></script>
 <script src="js/connection.js"></script>
 
@@ -20,6 +21,14 @@
 </head>
 
 <body>
-	<div id="map"></div>
+	<nav>
+		<div style="padding:10px; margin:0px; background-color:#DFE2DB">
+			Latitude: <input type="text" id="inlat">
+			Longitude: <input type="text" id="inlng">
+			<button onClick="applyCoordinates();">Apply</button>
+		</div>
+	</nav>
+
+	<div id="map">Loading...</div>
 </body>
 </html>

@@ -10,13 +10,16 @@ import (
 
 // Config is the basic handle of configurations file
 type Config struct {
-	Port string `json:"port"`
-	IP   string
+	Port        string `json:"port"`
+	IP          string
+	StartingLat string `json:"starting_lat"`
+	StartingLng string `json:"starting_lng"`
 }
 
+var Cfg Config
+
 // ReadConfigs do what it say :D
-func ReadConfigs() Config {
-	var cfg Config
+func ReadConfigs() {
 	// Reading configs from file
 	file, err := ioutil.ReadFile("config.cfg")
 
@@ -25,16 +28,15 @@ func ReadConfigs() Config {
 		os.Exit(1)
 	}
 
-	err = json.Unmarshal(file, &cfg)
+	err = json.Unmarshal(file, &Cfg)
 
 	if err != nil {
 		fmt.Println("Error decoding the config file\n" + err.Error())
 		os.Exit(1)
 	}
 
-	cfg.IP = getIP()
+	Cfg.IP = getIP()
 
-	return cfg
 }
 
 func getIP() string {
